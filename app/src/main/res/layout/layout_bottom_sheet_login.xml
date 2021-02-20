@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_bottom_sheet_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_bottom_sheet_profile"
+    android:orientation="vertical"
+    android:padding="30dp">
+
+    <EditText
+        android:id="@+id/input_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/background_input_login"
+        android:drawableStart="@drawable/ic_person_outline"
+        android:drawableLeft="@drawable/ic_person_outline"
+        android:drawablePadding="@dimen/_12sdp"
+        android:drawableTint="@color/colorPrimary"
+        android:hint="Enter Name"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:includeFontPadding="false"
+        android:inputType="text"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingLeft="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingRight="@dimen/_12sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/icons"
+        android:textSize="@dimen/_13ssp" />
+
+    <Button
+        android:id="@+id/btn_continue"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/button_login"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:focusable="true"
+        android:fontFamily="@font/ubuntu_medium"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/_25sdp"
+        android:paddingLeft="@dimen/_25sdp"
+        android:paddingEnd="@dimen/_25sdp"
+        android:paddingRight="@dimen/_25sdp"
+        android:text="Continue"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13ssp" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/button_login"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:focusable="true"
+        android:fontFamily="@font/ubuntu_medium"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/_25sdp"
+        android:paddingLeft="@dimen/_25sdp"
+        android:paddingEnd="@dimen/_25sdp"
+        android:paddingRight="@dimen/_25sdp"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13ssp" />
+
+</LinearLayout>

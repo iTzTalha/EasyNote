@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_color_pick"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_10ssp"
+    android:layout_marginBottom="@dimen/_10ssp"
+    android:background="@color/colorPrimary"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <View
+            android:id="@+id/viewColor1"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/background_note_color_1" />
+
+        <ImageView
+            android:id="@+id/imageColor1"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/_10ssp"
+            android:src="@drawable/ic_done_right"
+            app:tint="@color/white" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <View
+            android:id="@+id/viewColor2"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/background_note_color_2" />
+
+        <ImageView
+            android:id="@+id/imageColor2"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/_10ssp"
+            app:tint="@color/white" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <View
+            android:id="@+id/viewColor3"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/background_note_color_3" />
+
+        <ImageView
+            android:id="@+id/imageColor3"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/_10ssp"
+            app:tint="@color/white" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <View
+            android:id="@+id/viewColor4"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/background_note_color_4" />
+
+        <ImageView
+            android:id="@+id/imageColor4"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/_10ssp"
+            app:tint="@color/white" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <View
+            android:id="@+id/viewColor5"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/background_note_color_5" />
+
+        <ImageView
+            android:id="@+id/imageColor5"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/_10ssp"
+            app:tint="@color/white" />
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_medium"
+        android:includeFontPadding="false"
+        android:text="@string/pick_color"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13ssp"/>
+
+</LinearLayout>
