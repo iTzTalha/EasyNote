@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
 
     private void showUrlDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.layout_dialog_add_url, (LinearLayout) findViewById(R.id.layout_dialog_container));
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_dialog_add_url, findViewById(R.id.layout_dialog_container));
         builder.setView(view);
 
         alertDialogUrl = builder.create();

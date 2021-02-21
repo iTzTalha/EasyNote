@@ -265,7 +265,7 @@ public class AddNoteFragment extends DialogFragment {
 
     private void showDeleteNoteDialog(Context context, Note note) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_dialog_delete, (LinearLayout) getActivity().findViewById(R.id.layout_dialog_delete_container));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_dialog_delete, getActivity().findViewById(R.id.layout_dialog_delete_container));
         builder.setView(view);
 
         alertDialogUrl = builder.create();
@@ -320,7 +320,7 @@ public class AddNoteFragment extends DialogFragment {
 
     private void showUrlDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_dialog_add_url, (LinearLayout) getActivity().findViewById(R.id.layout_dialog_container));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_dialog_add_url, getActivity().findViewById(R.id.layout_dialog_container));
         builder.setView(view);
 
         alertDialogUrl = builder.create();
