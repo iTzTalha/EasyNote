@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
     private static final int REQUEST_CODE_EXTERNAL_PERMISSION = 2;
     SharedPreferences sharedPreferences;
 
+    RelativeLayout layout_info;
+
     TextView myName;
     CircleImageView myPhoto;
     FloatingActionButton addNote;
@@ -88,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
         initViews();
         url = "";
         fillRecyclerView();
+        showLayoutNoteInfo();
         addNote.setOnClickListener(v -> openNoteFragment(null, null));
         layoutProfile.setOnClickListener(v -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialogTheme);
@@ -133,6 +137,8 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
     }
 
     void initViews() {
+        layout_info = findViewById(R.id.layout_info);
+
         myName = findViewById(R.id.textMyName);
         myPhoto = findViewById(R.id.imagePhoto);
         addNote = findViewById(R.id.floatingAction_AddNote);
@@ -205,6 +211,14 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
         noteAdapter.notifyDataSetChanged();
     }
 
+    private void showLayoutNoteInfo() {
+        if (notes.size() == 0) {
+            layout_info.setVisibility(View.VISIBLE);
+        } else {
+            layout_info.setVisibility(View.GONE);
+        }
+    }
+
     private void openNoteFragment(Note note, String action) {
         AddNoteFragment dialogFragment = AddNoteFragment.Instance();
         if (note != null && action.equalsIgnoreCase("update")) {
@@ -256,11 +270,13 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
     @Override
     public void onNoteInserted() {
         fillRecyclerView();
+        showLayoutNoteInfo();
     }
 
     @Override
     public void onNoteDeleted() {
         fillRecyclerView();
+        showLayoutNoteInfo();
     }
 
     private void showUrlDialog() {

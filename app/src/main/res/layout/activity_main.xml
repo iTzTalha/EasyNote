@@ -130,6 +130,51 @@
         app:layout_constraintBottom_toTopOf="@+id/layoutActions"
         app:layout_constraintTop_toBottomOf="@+id/layoutSearch" />
 
+    <RelativeLayout
+        android:id="@+id/layout_info"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginLeft="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_2sdp"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:paddingStart="0dp"
+        android:paddingLeft="0dp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingRight="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
+        app:layout_constraintBottom_toTopOf="@+id/layoutActions"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSearch">
+
+        <ImageView
+            android:id="@+id/imageNoteInfo"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_22sdp"
+            android:clickable="false"
+            android:contentDescription="@string/app_name"
+            android:focusable="false"
+            android:src="@drawable/notes_info" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageNoteInfo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginRight="@dimen/_12sdp"
+            android:gravity="center_horizontal"
+            android:text="@string/notes_you_add_appear_here"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_12ssp" />
+
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/layoutActions"
         android:layout_width="match_parent"
