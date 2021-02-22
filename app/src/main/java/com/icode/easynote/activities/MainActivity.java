@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
     SharedPreferences sharedPreferences;
 
     private String personID;
+    String previous;
 
     RelativeLayout layout_info;
 
@@ -96,8 +97,12 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
         account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
             personID = "table_" + account.getId();
+            previous = getSharedPreferences("PREF", MODE_PRIVATE).getString("ID", "");
             Log.e("PERSON_ID", personID);
             db = new NoteDatabase(MainActivity.this, personID);
+            if (!db.tableExists(personID)) {
+                db.execSQL(personID);
+            }
         }
         initViews();
         url = "";
@@ -181,7 +186,12 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
         Uri personPhoto = account.getPhotoUrl();
 
         myName.setText(personName);
-        Glide.with(this).load(String.valueOf(personPhoto)).into(myPhoto);
+        Glide.with(this)
+                .load(String.valueOf(personPhoto))
+                .placeholder(R.drawable.profile_holder)
+                .fallback(R.drawable.profile_holder)
+                .error(R.drawable.profile_holder)
+                .into(myPhoto);
     }
 
     private void toLoginActivity() {
@@ -201,6 +211,13 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         // ...
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("PREF", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("ID", personID);
+                        editor.apply();
+
+                        previous = personID;
                         toLoginActivity();
                         Snackbar.make(MainActivity.this, findViewById(android.R.id.content), "Signed out Successfully", Snackbar.LENGTH_SHORT).show();
                     }

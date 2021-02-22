@@ -22,6 +22,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.icode.easynote.R;
+import com.icode.easynote.database.NoteDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -27,6 +27,7 @@ public class NoteDatabase {
         //Log.e("NDB", tableName);
         dbHelper = new DatabaseHelper(context, tableName);
         db = dbHelper.getWritableDatabase();
+        Log.e("NOTE_DB", "NoteDatabase Constructor called");
     }
 
     public long insertNote(Note note) {
@@ -92,6 +93,35 @@ public class NoteDatabase {
         return notes;
     }
 
+    public void execSQL(String tableNAme) {
+        db.execSQL("CREATE TABLE " + tableNAme +
+                " (" + DatabaseHelper.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DatabaseHelper.KEY_TITLE + " TEXT, " + DatabaseHelper.KEY_SUBTITLE + " TEXT, " + DatabaseHelper.KEY_DATE + " TEXT, " + DatabaseHelper.KEY_NOTE + " TEXT, " + DatabaseHelper.KEY_COLOR + " TEXT, " + DatabaseHelper.KEY_PHOTO + " TEXT, " + DatabaseHelper.KEY_LINK + " TEXT)");
+    }
+
+    public boolean tableExists(String tableName)
+    {
+        if (tableName == null || db == null || !db.isOpen())
+        {
+            return false;
+        }
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM sqlite_master WHERE type = ? AND name = ?",
+                new String[] {"table", tableName}
+        );
+        if (!cursor.moveToFirst())
+        {
+            cursor.close();
+            return false;
+        }
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count > 0;
+    }
+
+    public void setDatabaseVersion(int version) {
+        DatabaseHelper.DATABASE_VERSION = version;
+    }
+
     private static class DatabaseHelper extends SQLiteOpenHelper {
         //DB Data
         private final static String DATABASE_NAME = "easyNote";
@@ -128,7 +158,9 @@ public class NoteDatabase {
             //Delete Table
             QUERY_DROP_TABLE = "DROP TABLE IF EXISTS " + tableName;
             //select all from db
-            QUERY_GET_TABLE = "SELECT * FROM " + tableName + " ORDER BY "+ KEY_ID +" DESC";
+            QUERY_GET_TABLE = "SELECT * FROM " + tableName + " ORDER BY " + KEY_ID + " DESC";
+
+            Log.e("DatabaseHelper", "DatabaseHelper Constructor called");
         }
 
         @Override
@@ -143,13 +175,14 @@ public class NoteDatabase {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            try {
-                //db.execSQL(QUERY_DROP_TABLE);
-                onCreate(db);
-            } catch (SQLException e) {
-                Log.e("SQL_UPGRADE_ERROR", e.getMessage());
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            if (newVersion > oldVersion)
+                try {
+                    //db.execSQL(QUERY_DROP_TABLE);
+                    onCreate(db);
+                } catch (SQLException e) {
+                    Log.e("SQL_UPGRADE_ERROR", e.getMessage());
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
         }
     }
 }
