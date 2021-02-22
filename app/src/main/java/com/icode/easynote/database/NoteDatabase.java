@@ -20,8 +20,12 @@ public class NoteDatabase {
     DatabaseHelper dbHelper;
     SQLiteDatabase db;
 
-    public NoteDatabase(Context context) {
-        dbHelper = new DatabaseHelper(context);
+    String tableName;
+
+    public NoteDatabase(Context context, String tableName) {
+        this.tableName = tableName;
+        //Log.e("NDB", tableName);
+        dbHelper = new DatabaseHelper(context, tableName);
         db = dbHelper.getWritableDatabase();
     }
 
@@ -35,7 +39,7 @@ public class NoteDatabase {
         values.put(DatabaseHelper.KEY_PHOTO, note.getPhotoPath());
         values.put(DatabaseHelper.KEY_LINK, note.getLink());
 
-        return db.insert(DatabaseHelper.DATABASE_TABLE_NAME, null, values);
+        return db.insert(tableName, null, values);
     }
 
     public long updateNote(Note note) {
@@ -48,11 +52,11 @@ public class NoteDatabase {
         values.put(DatabaseHelper.KEY_PHOTO, note.getPhotoPath());
         values.put(DatabaseHelper.KEY_LINK, note.getLink());
 
-        return db.update(DatabaseHelper.DATABASE_TABLE_NAME, values, DatabaseHelper.KEY_ID + "=?", new String[]{String.valueOf(note.getId())});
+        return db.update(tableName, values, DatabaseHelper.KEY_ID + "=?", new String[]{String.valueOf(note.getId())});
     }
 
     public void deleteNote(long id) {
-        db.delete(DatabaseHelper.DATABASE_TABLE_NAME, DatabaseHelper.KEY_ID + "=?", new String[]{String.valueOf(id)});
+        db.delete(tableName, DatabaseHelper.KEY_ID + "=?", new String[]{String.valueOf(id)});
         db.close();
     }
 
@@ -60,7 +64,7 @@ public class NoteDatabase {
     public Note getNote(long id) {
         String[] columns = {DatabaseHelper.KEY_ID, DatabaseHelper.KEY_TITLE, DatabaseHelper.KEY_SUBTITLE, DatabaseHelper.KEY_DATE, DatabaseHelper.KEY_NOTE, DatabaseHelper.KEY_COLOR, DatabaseHelper.KEY_PHOTO, DatabaseHelper.KEY_LINK};
         String[] selectionArgs = {String.valueOf(id)};
-        Cursor cursor = db.query(DatabaseHelper.DATABASE_TABLE_NAME, columns, DatabaseHelper.KEY_ID + "=?", selectionArgs, null, null, null);
+        Cursor cursor = db.query(tableName, columns, DatabaseHelper.KEY_ID + "=?", selectionArgs, null, null, null);
 
         if (cursor != null)
             cursor.moveToFirst();
@@ -72,7 +76,7 @@ public class NoteDatabase {
         List<Note> notes = new ArrayList<>();
         Cursor cursor = null;
         try {
-            cursor = db.rawQuery(DatabaseHelper.QUERY_GET_TABLE, null);
+            cursor = db.rawQuery(dbHelper.QUERY_GET_TABLE, null);
         } catch (SQLException e) {
             Log.e("GET_TABLE", e.getMessage());
             //Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -91,7 +95,7 @@ public class NoteDatabase {
     private static class DatabaseHelper extends SQLiteOpenHelper {
         //DB Data
         private final static String DATABASE_NAME = "easyNote";
-        private final static String DATABASE_TABLE_NAME = "notes";
+        //private String DATABASE_TABLE_NAME;
         private final static int DATABASE_VERSION = 1;
 
         //Columns for DB
@@ -106,18 +110,25 @@ public class NoteDatabase {
 
         //QUERIES:
         //Create Table
-        private final static String QUERY_CREATE_TABLE = "CREATE TABLE " + DATABASE_TABLE_NAME +
-                " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE + " TEXT, " + KEY_SUBTITLE + " TEXT, " + KEY_DATE + " TEXT, " + KEY_NOTE + " TEXT, " + KEY_COLOR + " TEXT, " + KEY_PHOTO + " TEXT, " + KEY_LINK + " TEXT)";
+        private final String QUERY_CREATE_TABLE;// = "CREATE TABLE " + DATABASE_TABLE_NAME +
+        //" (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE + " TEXT, " + KEY_SUBTITLE + " TEXT, " + KEY_DATE + " TEXT, " + KEY_NOTE + " TEXT, " + KEY_COLOR + " TEXT, " + KEY_PHOTO + " TEXT, " + KEY_LINK + " TEXT)";
         //Delete Table
-        private final static String QUERY_DROP_TABLE = "DROP TABLE IF EXISTS " + DATABASE_TABLE_NAME;
+        private final String QUERY_DROP_TABLE;// = "DROP TABLE IF EXISTS " + DATABASE_TABLE_NAME;
         //select all from db
-        private final static String QUERY_GET_TABLE = "SELECT * FROM " + DATABASE_TABLE_NAME;
+        private final String QUERY_GET_TABLE;// = "SELECT * FROM " + DATABASE_TABLE_NAME;
 
-        private Context context;
+        private final Context context;
 
-        public DatabaseHelper(@Nullable Context context) {
+        public DatabaseHelper(@Nullable Context context, String tableName) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             this.context = context;
+            //DATABASE_TABLE_NAME = tableName;
+            QUERY_CREATE_TABLE = "CREATE TABLE " + tableName +
+                    " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE + " TEXT, " + KEY_SUBTITLE + " TEXT, " + KEY_DATE + " TEXT, " + KEY_NOTE + " TEXT, " + KEY_COLOR + " TEXT, " + KEY_PHOTO + " TEXT, " + KEY_LINK + " TEXT)";
+            //Delete Table
+            QUERY_DROP_TABLE = "DROP TABLE IF EXISTS " + tableName;
+            //select all from db
+            QUERY_GET_TABLE = "SELECT * FROM " + tableName;
         }
 
         @Override
@@ -125,7 +136,7 @@ public class NoteDatabase {
             try {
                 db.execSQL(QUERY_CREATE_TABLE);
             } catch (SQLException e) {
-                //Log.d("SQL_CREATION_ERROR", e.getMessage());
+                Log.e("SQL_CREATION_ERROR", e.getMessage());
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
@@ -136,7 +147,7 @@ public class NoteDatabase {
                 db.execSQL(QUERY_DROP_TABLE);
                 onCreate(db);
             } catch (SQLException e) {
-                //Log.d("SQL_CREATION_ERROR", e.getMessage());
+                Log.e("SQL_UPGRADE_ERROR", e.getMessage());
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }

@@ -15,6 +15,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class AddNoteFragment extends DialogFragment {
+
+    String personID;
 
     ImageView back, done, imageNote;
     EditText title, subtitle, note;
@@ -208,6 +211,8 @@ public class AddNoteFragment extends DialogFragment {
         if (bundle != null) {
             isUpdate = bundle.getBoolean("IS_UPDATE", false);
             isAction = bundle.getBoolean("IS_ACTION", false);
+            personID = bundle.getString("PERSON_ID");
+            //Log.e("BUNDLE_FRAGMENT", personID);
             if (isUpdate) {
                 tempNote = (Note) bundle.getSerializable("NOTE");
                 viewUpdatedNote();
@@ -240,7 +245,7 @@ public class AddNoteFragment extends DialogFragment {
             note.setId(tempNote.getId());
         }
 
-        NoteDatabase db = new NoteDatabase(context);
+        NoteDatabase db = new NoteDatabase(context, personID);
         long id;
         if (isUpdate) {
             id = db.updateNote(note);
@@ -257,7 +262,7 @@ public class AddNoteFragment extends DialogFragment {
     }
 
     private void deleteNote(Context context, Note note) {
-        NoteDatabase db = new NoteDatabase(context);
+        NoteDatabase db = new NoteDatabase(context, personID);
         db.deleteNote(note.getId());
         dismiss();
         listener.onNoteDeleted();

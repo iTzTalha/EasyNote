@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,10 +55,12 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements INoteFragmentListener, INoteListener {
-
+    GoogleSignInAccount account;
     private static final int REQUEST_CODE_SELECT_IMAGE = 1;
     private static final int REQUEST_CODE_EXTERNAL_PERMISSION = 2;
     SharedPreferences sharedPreferences;
+
+    private String personID;
 
     RelativeLayout layout_info;
 
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
 
@@ -88,6 +91,11 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sharedPreferences = getSharedPreferences("PREF", MODE_PRIVATE);
+        account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null) {
+            personID = "table_" + account.getId();
+            //Log.e("PERSON_ID", personID);
+        }
         initViews();
         url = "";
         fillRecyclerView();
@@ -166,8 +174,7 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
         String personName = account.getDisplayName();
 //        String personGivenName = account.getGivenName();
 //        String personFamilyName = account.getFamilyName();
-//        String personEmail = account.getEmail();
-//        String personId = account.getId();
+        //personID = account.getEmail().toLowerCase().trim().replaceAll("[ .@_]", "");
         Uri personPhoto = account.getPhotoUrl();
 
         myName.setText(personName);
@@ -198,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
     }
 
     List<Note> getNotes() {
-        NoteDatabase db = new NoteDatabase(MainActivity.this);
+        NoteDatabase db = new NoteDatabase(MainActivity.this, personID);
         notes = db.getNotes();
         Collections.reverse(notes);
         return notes;
@@ -221,17 +228,16 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
 
     private void openNoteFragment(Note note, String action) {
         AddNoteFragment dialogFragment = AddNoteFragment.Instance();
+        Bundle args = new Bundle();
+        args.putString("PERSON_ID", personID);
         if (note != null && action.equalsIgnoreCase("update")) {
-            Bundle args = new Bundle();
             args.putBoolean("IS_UPDATE", true);
             args.putSerializable("NOTE", note);
-            dialogFragment.setArguments(args);
         } else if (note != null && action.equalsIgnoreCase("action")) {
-            Bundle args = new Bundle();
             args.putBoolean("IS_ACTION", true);
             args.putSerializable("NOTE", note);
-            dialogFragment.setArguments(args);
         }
+        dialogFragment.setArguments(args);
         dialogFragment.show(getSupportFragmentManager(), "add_note_dialog");
     }
 
