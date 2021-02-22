@@ -209,7 +209,6 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
 
     List<Note> getNotes() {
         notes = db.getNotes();
-        Collections.reverse(notes);
         return notes;
     }
 

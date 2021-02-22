@@ -128,7 +128,7 @@ public class NoteDatabase {
             //Delete Table
             QUERY_DROP_TABLE = "DROP TABLE IF EXISTS " + tableName;
             //select all from db
-            QUERY_GET_TABLE = "SELECT * FROM " + tableName;
+            QUERY_GET_TABLE = "SELECT * FROM " + tableName + " ORDER BY "+ KEY_ID +" DESC";
         }
 
         @Override
