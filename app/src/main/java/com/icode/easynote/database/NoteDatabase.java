@@ -96,7 +96,7 @@ public class NoteDatabase {
         //DB Data
         private final static String DATABASE_NAME = "easyNote";
         //private String DATABASE_TABLE_NAME;
-        private final static int DATABASE_VERSION = 1;
+        private static int DATABASE_VERSION = 1;
 
         //Columns for DB
         private final static String KEY_ID = "id";
@@ -144,7 +144,7 @@ public class NoteDatabase {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             try {
-                db.execSQL(QUERY_DROP_TABLE);
+                //db.execSQL(QUERY_DROP_TABLE);
                 onCreate(db);
             } catch (SQLException e) {
                 Log.e("SQL_UPGRADE_ERROR", e.getMessage());

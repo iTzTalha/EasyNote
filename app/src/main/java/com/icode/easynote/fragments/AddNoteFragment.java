@@ -46,6 +46,8 @@ import java.util.Objects;
 
 public class AddNoteFragment extends DialogFragment {
 
+    NoteDatabase db;
+
     String personID;
 
     ImageView back, done, imageNote;
@@ -212,7 +214,7 @@ public class AddNoteFragment extends DialogFragment {
             isUpdate = bundle.getBoolean("IS_UPDATE", false);
             isAction = bundle.getBoolean("IS_ACTION", false);
             personID = bundle.getString("PERSON_ID");
-            //Log.e("BUNDLE_FRAGMENT", personID);
+            Log.e("BUNDLE_FRAGMENT", personID);
             if (isUpdate) {
                 tempNote = (Note) bundle.getSerializable("NOTE");
                 viewUpdatedNote();
@@ -224,6 +226,7 @@ public class AddNoteFragment extends DialogFragment {
                 tempNote = (Note) bundle.getSerializable("NOTE");
                 viewUpdatedNote();
             }
+            db = new NoteDatabase(getActivity(), personID);
         }
     }
 
@@ -245,7 +248,6 @@ public class AddNoteFragment extends DialogFragment {
             note.setId(tempNote.getId());
         }
 
-        NoteDatabase db = new NoteDatabase(context, personID);
         long id;
         if (isUpdate) {
             id = db.updateNote(note);
@@ -262,7 +264,6 @@ public class AddNoteFragment extends DialogFragment {
     }
 
     private void deleteNote(Context context, Note note) {
-        NoteDatabase db = new NoteDatabase(context, personID);
         db.deleteNote(note.getId());
         dismiss();
         listener.onNoteDeleted();

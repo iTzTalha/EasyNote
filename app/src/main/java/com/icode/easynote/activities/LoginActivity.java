@@ -61,29 +61,29 @@ public class LoginActivity extends AppCompatActivity {
         g_login.setOnClickListener(v -> signIn());
 
         Button login = findViewById(R.id.btn_login);
-        login.setOnClickListener(v -> {
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(LoginActivity.this, R.style.BottomSheetDialogTheme);
-            View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.layout_bottom_sheet_login, (LinearLayout) findViewById(R.id.layout_bottom_sheet_login));
-            view.findViewById(R.id.btn_continue).setOnClickListener(vv -> {
-                EditText inputName = view.findViewById(R.id.input_name);
-                String name = inputName.getText().toString().trim();
-                if (name.isEmpty()) {
-                    inputName.setError("Name can't be empty!");
-                } else {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("NAME", name);
-                    editor.putBoolean("LOGGED_IN", true);
-                    editor.apply();
-                    bottomSheetDialog.dismiss();
-                    startActivity(intent);
-                    finish();
-                }
-            });
-            view.findViewById(R.id.btn_cancel).setOnClickListener(vv -> bottomSheetDialog.dismiss());
-            bottomSheetDialog.setContentView(view);
-            bottomSheetDialog.show();
-        });
+//        login.setOnClickListener(v -> {
+//            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(LoginActivity.this, R.style.BottomSheetDialogTheme);
+//            View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.layout_bottom_sheet_login, (LinearLayout) findViewById(R.id.layout_bottom_sheet_login));
+//            view.findViewById(R.id.btn_continue).setOnClickListener(vv -> {
+//                EditText inputName = view.findViewById(R.id.input_name);
+//                String name = inputName.getText().toString().trim();
+//                if (name.isEmpty()) {
+//                    inputName.setError("Name can't be empty!");
+//                } else {
+//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putString("NAME", name);
+//                    editor.putBoolean("LOGGED_IN", true);
+//                    editor.apply();
+//                    bottomSheetDialog.dismiss();
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            });
+//            view.findViewById(R.id.btn_cancel).setOnClickListener(vv -> bottomSheetDialog.dismiss());
+//            bottomSheetDialog.setContentView(view);
+//            bottomSheetDialog.show();
+//        });
     }
 
     private void updateUI(GoogleSignInAccount account) {

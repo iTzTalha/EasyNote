@@ -56,6 +56,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements INoteFragmentListener, INoteListener {
     GoogleSignInAccount account;
+    NoteDatabase db;
+
     private static final int REQUEST_CODE_SELECT_IMAGE = 1;
     private static final int REQUEST_CODE_EXTERNAL_PERMISSION = 2;
     SharedPreferences sharedPreferences;
@@ -94,7 +96,8 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
         account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
             personID = "table_" + account.getId();
-            //Log.e("PERSON_ID", personID);
+            Log.e("PERSON_ID", personID);
+            db = new NoteDatabase(MainActivity.this, personID);
         }
         initViews();
         url = "";
@@ -205,7 +208,6 @@ public class MainActivity extends AppCompatActivity implements INoteFragmentList
     }
 
     List<Note> getNotes() {
-        NoteDatabase db = new NoteDatabase(MainActivity.this, personID);
         notes = db.getNotes();
         Collections.reverse(notes);
         return notes;
