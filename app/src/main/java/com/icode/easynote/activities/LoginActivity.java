@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         RelativeLayout g_login = findViewById(R.id.btn_loginGoogle);
         g_login.setOnClickListener(v -> signIn());
 
-        Button login = findViewById(R.id.btn_login);
+//        Button login = findViewById(R.id.btn_login);
 //        login.setOnClickListener(v -> {
 //            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(LoginActivity.this, R.style.BottomSheetDialogTheme);
 //            View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.layout_bottom_sheet_login, (LinearLayout) findViewById(R.id.layout_bottom_sheet_login));
