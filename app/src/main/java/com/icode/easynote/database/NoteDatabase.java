@@ -61,18 +61,6 @@ public class NoteDatabase {
         db.close();
     }
 
-
-    public Note getNote(long id) {
-        String[] columns = {DatabaseHelper.KEY_ID, DatabaseHelper.KEY_TITLE, DatabaseHelper.KEY_SUBTITLE, DatabaseHelper.KEY_DATE, DatabaseHelper.KEY_NOTE, DatabaseHelper.KEY_COLOR, DatabaseHelper.KEY_PHOTO, DatabaseHelper.KEY_LINK};
-        String[] selectionArgs = {String.valueOf(id)};
-        Cursor cursor = db.query(tableName, columns, DatabaseHelper.KEY_ID + "=?", selectionArgs, null, null, null);
-
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        return new Note(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
-    }
-
     public List<Note> getNotes() {
         List<Note> notes = new ArrayList<>();
         Cursor cursor = null;
@@ -116,10 +104,6 @@ public class NoteDatabase {
         int count = cursor.getInt(0);
         cursor.close();
         return count > 0;
-    }
-
-    public void setDatabaseVersion(int version) {
-        DatabaseHelper.DATABASE_VERSION = version;
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
